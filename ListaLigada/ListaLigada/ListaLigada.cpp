@@ -119,38 +119,97 @@ void inserirElemento()
 {
 	// aloca memoria dinamicamente para o novo elemento
 	NO* novo = (NO*)malloc(sizeof(NO));
-	if (novo == NULL)
-	{
-		return;
-	}
 
-	cout << "Digite o elemento: ";
-	cin >> novo->valor;
-	novo->prox = NULL;
+	if(novo != NULL) {
+		cout << "Digite o elemento: ";
+		cin >> novo->valor;
+		novo->prox = NULL;
 
-	if (primeiro == NULL)
-	{
-		primeiro = novo;
-	}
-	else
-	{
-		// procura o final da lista
-		NO* aux = primeiro;
-		while (aux->prox != NULL) {
-			aux = aux->prox;
+		if (primeiro == NULL)
+		{
+			primeiro = novo;
 		}
-		aux->prox = novo;
+		else
+		{
+			NO* aux = primeiro;
+
+			while (aux->prox != NULL)
+			{
+				aux = aux->prox;
+			}
+
+			aux->prox = novo;
+		}
+
+		cout << "Elemento inserido com sucesso!\n";
+	}
+	else {
+		cout << "Erro ao alocar memória!\n";
 	}
 }
 
 void excluirElemento()
 {
-	
+	int valorDigitado = 0, nEncontrado = 0;
+	cout << "Digite o elemento: "; cin >> valorDigitado;
+
+	if(primeiro != NULL)
+	{
+		NO* aux = primeiro;
+		NO* anterior = NULL;
+
+		if(valorDigitado != primeiro->valor)
+		{
+			while(aux != NULL)
+			{
+				if(aux->valor == valorDigitado)
+				{
+					if(anterior != NULL)
+					{
+						anterior->prox = aux->prox;
+					}
+					free(aux);
+					cout << "Elemento foi removido com sucesso.\n";
+					return;
+				}
+				anterior = aux;
+				aux = aux->prox;
+			}
+			cout << "Elemento não foi encontrado :(\n";
+		}
+		else
+		{
+			primeiro = primeiro->prox;
+			free(aux);
+			cout << "Elemento foi removido com sucesso.\n";
+		}
+	}
+	else
+	{
+		cout << "Lista vazia, cabeça de chapéu...\n";
+	}
 }
 
 void buscarElemento()
 {
-	
+	int valorDigitado = 0, nEncontrado = 0;
+	cout << "Digite o elemento: "; cin >> valorDigitado;
+
+	NO* aux = primeiro;
+
+	while (primeiro == NULL) {
+		if (aux->valor == valorDigitado) {
+			aux = aux->prox;
+			nEncontrado++;
+		}
+	}
+	if (nEncontrado != 0) {
+		cout << "Foram encontrados " << nEncontrado << "vezes esse número na lista.";
+	}
+	else {
+		cout << "Este número não foi encontrado na lista.";
+
+	}
 }
 
 
